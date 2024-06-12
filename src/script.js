@@ -26,6 +26,9 @@ generatedMusicContainer.appendChild(scalesContainer);
 //console.log('chord detected is : ', Chord.detect(["D", "G", "C"]));
 
 let savedMelody;
+let isToneStarted = false;
+// define a list of note lengths to be used in the melody generation
+let noteLengths = ["16n", "8n", "4n", "16n.", "8n.", "4n."];
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -67,19 +70,17 @@ function generateMelody(){
 
 
 // play
-const synth = new Tone.Synth().toDestination(); // define a mono synth and 
+const synth = new Tone.Synth().toDestination(); // define a mono synth and route it to your speakers
 
 async function playMelody(melody){
-    await Tone.start();
-    let now = 0;
-    synth.triggerAttackRelease(melody[0], "8n", now);
-    synth.triggerAttackRelease(melody[1], "8n", now + 0.5);
-    synth.triggerAttackRelease(melody[2], "8n", now + 1);
-    synth.triggerAttackRelease(melody[3], "8n", now + 1.5);
-    synth.triggerAttackRelease(melody[4], "8n", now + 2);
-    synth.triggerAttackRelease(melody[5], "8n", now + 2.5);
-    synth.triggerAttackRelease(melody[6], "8n", now + 3);
-    
+    if (!isToneStarted) {
+        await Tone.start();
+        isToneStarted = true;
+    }
+    let now = Tone.now();
+    for(let i = 0; i < melody.length; i++){
+        synth.triggerAttackRelease(melody[i], "8n", now + i * 0.5)
+    }
 }
 
 
@@ -87,8 +88,6 @@ let replayBtn = document.querySelector('#replay');
 replayBtn.addEventListener('click', () => { 
     console.log('playing last generated melody: ', savedMelody);
     playMelody(savedMelody);
-    replayBtn.removeEventListener;
-    replayBtn.addEventListener('click', playMelody)
 })
 
 let generateBtn = document.querySelector('#generate');
@@ -96,8 +95,6 @@ generateBtn.addEventListener('click', () => {
     let newMelody = generateMelody();
     console.log('melody generated: ', newMelody);
     playMelody(newMelody);
-    generateBtn.removeEventListener;
-    generateBtn.addEventListener('click', playMelody)
 })
 
 // randomize note length
