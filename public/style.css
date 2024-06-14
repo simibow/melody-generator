@@ -1,0 +1,84 @@
+*{
+    box-sizing: border-box;
+}
+section.piano-roll-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.note-lanes-container{
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+}
+.note-lane{
+    height: 50px;
+    position: relative;
+}
+.note-lane:nth-child(odd){
+    background-color: gray;
+}
+.note-lane:nth-child(even){
+    background-color: rgb(97, 94, 94);
+}
+/*the notes of the melody*/
+.note-lane>.note{
+    position: absolute;
+    background-color: cornflowerblue;
+    border-radius: 11px;
+    width: 50px;
+    height: 100%;
+}
+/*toggle switch based on a Codepen by Marcus Burnette (source: https://codepen.io/mburnette/pen/LxNxNg)*/
+input#switch-scale{ /*hide the checkbox*/
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label[for="switch-scale"] {
+	cursor: pointer;
+	width: 100px;
+	height: 40px;
+	background: #f44025;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+    margin-bottom: 10px;
+}
+
+label[for="switch-scale"]:after { /*the circle inside the toggle switch*/
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 30px;
+	height: 30px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+input#switch-scale:checked + label[for="switch-scale"] {
+	background: #55c2da;
+}
+
+input#switch-scale:checked + label[for="switch-scale"]:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label[for="switch-scale"]:active:after { /*creates an elastic effect when the toggle is switching*/
+	width: 50px;
+}
+label[for="switch-scale"]::before {
+    content: "Major";
+    position: absolute;
+    left: 40px;
+    top: 10px;
+}
+input#switch-scale:checked + label[for="switch-scale"]::before{
+    content: "Minor";
+    left: auto;
+    right: 40px;
+}

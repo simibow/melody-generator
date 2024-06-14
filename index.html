@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melody generator</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <section class="generated-music"></section>
+    <section class="piano-roll-container">
+        <div class="note-lanes-container">
+            <div class="note-lane b-lane" data-value="B4"></div>
+            <div class="note-lane a-lane" data-value="A4"></div>
+            <div class="note-lane g-lane" data-value="G4"></div>
+            <div class="note-lane f-lane" data-value="F4"></div>
+            <div class="note-lane e-lane" data-value="E4"></div>
+            <div class="note-lane d-lane" data-value="D4"></div>
+            <div class="note-lane c-lane" data-value="C4"></div>
+        </div>
+    </section>
+    <input type="checkbox" id="switch-scale"/><label for="switch-scale"></label>
     <button id="replay">Replay</button>
     <button id="generate">Generate</button>
     <script type="module" src="/src/script.js" defer></script>
