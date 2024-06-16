@@ -9,17 +9,46 @@
 <body>
     <section class="generated-music"></section>
     <section class="piano-roll-container">
+        <div class="piano">
+            <div class="decorative-line"></div>
+            <div class="piano-keys-container">
+                <div class="white-key"></div> <!--B key-->
+                <div class="black-key"></div> <!--A# key-->
+                <div class="white-key"></div> <!--A key-->
+                <div class="black-key"></div> <!--G# key-->
+                <div class="white-key"></div> <!--G key-->
+                <div class="black-key"></div> <!--F# key-->
+                <div class="white-key"></div> <!--F key-->
+                <div class="white-key"></div> <!--E key-->
+                <div class="black-key"></div> <!--D# key-->
+                <div class="white-key"></div> <!--D key-->
+                <div class="black-key"></div> <!--C# key-->
+                <div class="white-key"></div> <!--C key-->
+            </div>
+        </div>
         <div class="note-lanes-container">
             <div class="note-lane b-lane" data-value="B4"></div>
+            <div class="note-lane ash-lane" data-value="Bb4"></div>
             <div class="note-lane a-lane" data-value="A4"></div>
+            <div class="note-lane gsh-lane" data-value="Ab4"></div>
             <div class="note-lane g-lane" data-value="G4"></div>
+            <div class="note-lane fsh-lane" data-value="Gb4"></div>
             <div class="note-lane f-lane" data-value="F4"></div>
             <div class="note-lane e-lane" data-value="E4"></div>
+            <div class="note-lane dsh-lane" data-value="Eb4"></div>
             <div class="note-lane d-lane" data-value="D4"></div>
+            <div class="note-lane csh-lane" data-value="Db4"></div>
             <div class="note-lane c-lane" data-value="C4"></div>
         </div>
     </section>
     <input type="checkbox" id="switch-scale"/><label for="switch-scale"></label>
+    <label for="select-instrument">Instrument: </label>
+    <select id="select-instrument">
+        <option value="mono synth">Mono synth</option>
+        <option value="fm synth">FM synth</option>
+        <option value="pluck synth">Pluck synth</option>
+        <option value="piano">Piano</option>
+    </select>
     <button id="replay">Replay</button>
     <button id="generate">Generate</button>
     <script type="module" src="/src/script.js" defer></script>

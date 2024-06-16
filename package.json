@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tonejs/piano": "^0.2.1",
     "express": "^4.19.2",
     "tonal": "^6.0.1",
     "tone": "^15.0.4"

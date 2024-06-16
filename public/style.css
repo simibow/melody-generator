@@ -12,7 +12,7 @@ section.piano-roll-container{
     flex-direction: column;
 }
 .note-lane{
-    height: 50px;
+    height: 45px;
     position: relative;
 }
 .note-lane:nth-child(odd){
@@ -21,6 +21,21 @@ section.piano-roll-container{
 .note-lane:nth-child(even){
     background-color: rgb(97, 94, 94);
 }
+.note-lane:nth-child(8){
+    background-color: gray;
+}
+.note-lane:nth-child(9){
+    background-color: rgb(97, 94, 94);
+}
+.note-lane:nth-child(10){
+    background-color: gray;
+}
+.note-lane:nth-child(11){
+    background-color: rgb(97, 94, 94);
+}
+.note-lane:nth-child(12){
+    background-color: gray;
+}
 /*the notes of the melody*/
 .note-lane>.note{
     position: absolute;
@@ -28,6 +43,55 @@ section.piano-roll-container{
     border-radius: 11px;
     width: 50px;
     height: 100%;
+}
+/*piano*/
+.decorative-line{
+    width: 5px;
+    background-color: black;
+}
+.piano{
+    background-color: rgb(158, 126, 126);
+    width: 200px;
+    height: 540px; /*height equals height of note lanes*/
+    display: flex;
+}
+.piano-keys-container{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 5px);
+    position: relative;
+}
+.piano-keys-container>div{
+    flex: 1;
+    width: 100%;
+    border: 1px solid black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.white-key{
+    background-color: white;
+}
+.piano-keys-container>.black-key{
+    background-color: black;
+    height: 52px;
+    width: 80%;
+    position: absolute;
+}
+/*position all of the black keys absolutely*/
+.piano-keys-container>.black-key:nth-child(2){
+    top: 45px;
+}
+.piano-keys-container>.black-key:nth-child(4){
+    top: 131px;
+}
+.piano-keys-container>.black-key:nth-child(6){
+    top: 219px;
+}
+.piano-keys-container>.black-key:nth-child(9){
+    top: 357px;
+}
+.piano-keys-container>.black-key:nth-child(11){
+    top: 448px;
 }
 /*toggle switch based on a Codepen by Marcus Burnette (source: https://codepen.io/mburnette/pen/LxNxNg)*/
 input#switch-scale{ /*hide the checkbox*/

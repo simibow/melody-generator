@@ -46,6 +46,8 @@ let melodyNotesContainer = document.createElement('div');
 let allNoteLanes = document.querySelectorAll('.note-lane');
 // console.log('allNoteLanes is ', allNoteLanes);
 // console.log('CLaneContainer is ', CLaneContainer);
+// get the scale toggle switch element
+let scaleToggle = document.querySelector('#switch-scale');
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -58,8 +60,13 @@ function generateMelody(){
     let notes = [];
     noteLengths = []; // reset the array
     // randomize pitch
-    // for now lets hardcode the scale as major and the key as C
-    let scaleNotes = Scale.get("C major").notes;
+    let scaleNotes; // define the container for the notes of the chosen scale
+    if (scaleToggle.checked){
+        scaleNotes = Scale.get("C minor").notes;
+    }
+    else{
+        scaleNotes = Scale.get("C major").notes;
+    }
     // document.getElementById("checkbox_id").checked => returns true if checked
 
     function getRandomScaleNote(){
@@ -103,8 +110,65 @@ function generateMelody(){
 }
 
 
-// play
-const synth = new Tone.Synth().toDestination(); // define a mono synth and route it to your speakers
+// select the instrument
+let instrumentElement = document.querySelector('#select-instrument');
+let instrument;
+let instrumentSound;
+let instrumentsSelection = {
+    'mono synth': new Tone.Synth().toDestination(),
+    'fm synth': new Tone.FMSynth().toDestination(),
+    'pluck synth': new Tone.PluckSynth().toDestination(),
+    'piano': new Tone.Sampler({
+        urls: {
+            "A0": "A0.mp3",
+            "C1": "C1.mp3",
+            "D#1": "Ds1.mp3",
+            "F#1": "Fs1.mp3",
+            "A1": "A1.mp3",
+            "C2": "C2.mp3",
+            "D#2": "Ds2.mp3",
+            "F#2": "Fs2.mp3",
+            "A2": "A2.mp3",
+            "C3": "C3.mp3",
+            "D#3": "Ds3.mp3",
+            "F#3": "Fs3.mp3",
+            "A3": "A3.mp3",
+            "C4": "C4.mp3",
+            "D#4": "Ds4.mp3",
+            "F#4": "Fs4.mp3",
+            "A4": "A4.mp3",
+            "C5": "C5.mp3",
+            "D#5": "Ds5.mp3",
+            "F#5": "Fs5.mp3",
+            "A5": "A5.mp3",
+            "C6": "C6.mp3",
+            "D#6": "Ds6.mp3",
+            "F#6": "Fs6.mp3",
+            "A6": "A6.mp3",
+            "C7": "C7.mp3",
+            "D#7": "Ds7.mp3",
+            "F#7": "Fs7.mp3",
+            "A7": "A7.mp3",
+            "C8": "C8.mp3"
+        },
+        baseUrl: "https://tonejs.github.io/audio/salamander/",
+        onload: () => console.log('Piano samples loaded')
+    }).toDestination()
+}
+
+// Set default instrument sound
+instrumentSound = instrumentsSelection['mono synth']; 
+
+instrumentElement.addEventListener('change', async function(){
+    instrument = instrumentElement.value;
+    console.log('instrument changed!: ', instrument);
+    instrumentSound = instrumentsSelection[instrument];
+    // if (instrument === 'piano') {
+    //     await instrumentSound.load();  // sampler returns a promise so we need to load the samples before using the piano
+    // }
+})
+
+//const synth = new Tone.Synth().toDestination(); // define a mono synth and route it to your speakers
 
 async function playMelody(melody, noteLengths){
     if (!isToneStarted) {
@@ -121,7 +185,7 @@ async function playMelody(melody, noteLengths){
     let restDuration = 0.2; // 100ms rest between notes
     for (let i = 0; i < melody.length; i++) {
         //console.log(`Playing note: ${melody[i]} for duration: ${noteLengths[i]} at time: ${now + accumulatedTime}`);
-        synth.triggerAttackRelease(melody[i], noteLengths[i], now + accumulatedTime);
+        instrumentSound.triggerAttackRelease(melody[i], noteLengths[i], now + accumulatedTime);
         accumulatedTime += Tone.Time(noteLengths[i]).toSeconds() + restDuration;
         //console.log('Tone.now() inside the for loop', Tone.now());
     }
