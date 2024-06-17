@@ -14,9 +14,12 @@
   "license": "ISC",
   "dependencies": {
     "@tonejs/piano": "^0.2.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
+    "midi-writer-js": "^3.1.1",
     "tonal": "^6.0.1",
-    "tone": "^15.0.4"
+    "tone": "^14.9.17"
   },
   "devDependencies": {
     "vite": "^5.2.13"

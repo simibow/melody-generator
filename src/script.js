@@ -1,5 +1,6 @@
-import { Note, Scale, ScaleType, Chord } from "tonal"; // imports the specified modules from the Tonal.js library, which is used to refer to music theory
+import { Scale } from "tonal"; // imports the specified modules from the Tonal.js library, which is used to refer to music theory
 import * as Tone from "tone"; // Tone.js is the API for playing the sounds
+import MidiWriter from 'midi-writer-js';
 import { log } from "tone/build/esm/core/util/Debug";
 
 
@@ -48,6 +49,8 @@ let allNoteLanes = document.querySelectorAll('.note-lane');
 // console.log('CLaneContainer is ', CLaneContainer);
 // get the scale toggle switch element
 let scaleToggle = document.querySelector('#switch-scale');
+// get the export button element
+let exportBtn = document.querySelector('#export');
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -219,9 +222,9 @@ function visualiseMelody(melody){
     let i = 0;
     let k = 0;
     for(i; i < melody.length; i++){ // for each melody note
-        console.log('enter for(i): ', melody[i]);
+        //console.log('enter for(i): ', melody[i]);
         for(k; k < allNoteLanes.length; k++){
-            console.log('enter for(k): ', allNoteLanes[k]);
+            //console.log('enter for(k): ', allNoteLanes[k]);
             if (allNoteLanes[k].dataset.value === melody[i]){
                 console.log('match found: ', allNoteLanes[k], ' and ', melody[i]);
                 let note = document.createElement("div");
@@ -246,6 +249,44 @@ function cleanMelody(){ // removes all the .note dom elements once a new melody 
         }
     }
 }
+
+// export melody as MIDI file
+function exportMelody(){
+    let track = new MidiWriter.Track(); // define a new track
+    let melody = savedMelodyComponents.melodyLine; // get the last played melody and note lengths
+    let noteLengths = savedMelodyComponents.noteLengths;
+    noteLengths = noteLengths.map(item => item.slice(0, -1)); // remove the 'n' from each note lengths
+    melody.forEach((note, index) => { // define the midi notes and their duration
+        let noteDuration = noteLengths[index];
+        track.addEvent(new MidiWriter.NoteEvent({pitch: [note], duration: [noteDuration]}))
+    });
+    // Create a write instance
+    let write = new MidiWriter.Writer(track);
+    // Output the MIDI file as a base64 string
+    let midiString = write.base64();
+    console.log(midiString);
+    fetch('http://localhost:3000/save-midi', { // send the midi string to a server endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ midiData: midiString }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+// execute the export function on button click
+exportBtn.addEventListener('click', () => exportMelody());
 
 
 // randomize note breaks
