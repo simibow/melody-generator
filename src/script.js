@@ -34,23 +34,22 @@ let noteLengthsSelection = [ "8n", "4n", "8n", "8n", "8n", "8n", "8n"]; // "16n"
 let noteLengths = [];
 let generatedMusicContainer = document.querySelector('section.generated-music'); // where the note progression will be displayed on the page
 let melodyNotesContainer = document.createElement('div');
-// get all the containers for the notes
-// where the melody will be visualised
-// let CLaneContainer = document.querySelector('.c-lane');
-// let DLaneContainer = document.querySelector('.d-lane');
-// let ELaneContainer = document.querySelector('.e-lane');
-// let FLaneContainer = document.querySelector('.f-lane');
-// let GLaneContainer = document.querySelector('.g-lane');
-// let ALaneContainer = document.querySelector('.a-lane');
-// let BLaneContainer = document.querySelector('.b-lane');
 // get a node list of the note containers
 let allNoteLanes = document.querySelectorAll('.note-lane');
-// console.log('allNoteLanes is ', allNoteLanes);
-// console.log('CLaneContainer is ', CLaneContainer);
 // get the scale toggle switch element
 let scaleToggle = document.querySelector('#switch-scale');
+// make sure the checkbox is unchecked on page reload
+scaleToggle.checked = false;
 // get the export button element
 let exportBtn = document.querySelector('#export');
+exportBtn.disabled = true;
+// get the replay melody button
+let replayBtn = document.querySelector('#replay');
+replayBtn.disabled = true;
+// get the generate new melody button
+let generateBtn = document.querySelector('#generate');
+// get the export message element 
+let exportMsg = document.querySelector('.export-message');
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -161,6 +160,7 @@ let instrumentsSelection = {
 
 // Set default instrument sound
 instrumentSound = instrumentsSelection['mono synth']; 
+instrumentElement.value = 'mono synth'; // set default option
 
 instrumentElement.addEventListener('change', async function(){
     instrument = instrumentElement.value;
@@ -177,11 +177,12 @@ async function playMelody(melody, noteLengths){
     if (!isToneStarted) {
         await Tone.start();
         isToneStarted = true;
+        console.log('enabling buttons');
+        replayBtn.disabled = false;
+        exportBtn.disabled = false;
     }
     // console.log('a fourth note in seconds: ', Tone.Time("4n").toSeconds()); => 0.5
     // Stop any previous notes to avoid endless sound
-    //Tone.Transport.stop();
-    //Tone.Transport.cancel();
     let now = Tone.now();
     //console.log('Tone.now() before the for loop', Tone.now());
     let accumulatedTime = 0;
@@ -192,17 +193,14 @@ async function playMelody(melody, noteLengths){
         accumulatedTime += Tone.Time(noteLengths[i]).toSeconds() + restDuration;
         //console.log('Tone.now() inside the for loop', Tone.now());
     }
-    //Tone.Transport.start();
 }
 
 
-let replayBtn = document.querySelector('#replay');
 replayBtn.addEventListener('click', () => { 
     //console.log('playing last generated melody: ', savedMelodyComponents.melodyLine);
     playMelody(savedMelodyComponents.melodyLine, savedMelodyComponents.noteLengths);
 })
 
-let generateBtn = document.querySelector('#generate');
 generateBtn.addEventListener('click', () => {
     let newMelodyComponenets = generateMelody();
     let newMelody = newMelodyComponenets.melodyLine
@@ -251,7 +249,7 @@ function cleanMelody(){ // removes all the .note dom elements once a new melody 
 }
 
 // export melody as MIDI file
-function exportMelody(){
+async function exportMelody(){
     let track = new MidiWriter.Track(); // define a new track
     let melody = savedMelodyComponents.melodyLine; // get the last played melody and note lengths
     let noteLengths = savedMelodyComponents.noteLengths;
@@ -265,25 +263,49 @@ function exportMelody(){
     // Output the MIDI file as a base64 string
     let midiString = write.base64();
     console.log(midiString);
-    fetch('http://localhost:3000/save-midi', { // send the midi string to a server endpoint
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ midiData: midiString }),
-    })
-    .then(response => {
+    try {
+        let response = await fetch('http://localhost:3000/save-midi', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ midiData: midiString }),
+        });
+        console.log('Response status:', response.status);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+        if(response.ok){
+            let data = await response.json();
+            console.log('Server says: ', data);
+            // when the response message is sent, display a message indicating successful save
+            exportMsg.style.display = 'block';
+            setTimeout(() => {
+                exportMsg.style.display = 'none';
+            }, 5000);
+        }
+    } catch (error) {
+        console.error('Export error: ', error);
+    }
+    // fetch('http://localhost:3000/save-midi', { // send the midi string to a server endpoint
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ midiData: midiString }),
+    // })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     return response.json();
+    // })
+    // .then(data => { // data is the response message wuth status 200
+    //     console.log('Success:', data);
+    // })
+    // .catch((error) => {
+    //     console.error('Error:', error);
+    // });
 }
 // execute the export function on button click
 exportBtn.addEventListener('click', () => exportMelody());
