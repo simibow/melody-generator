@@ -50,6 +50,8 @@ replayBtn.disabled = true;
 let generateBtn = document.querySelector('#generate');
 // get the export message element 
 let exportMsg = document.querySelector('.export-message');
+// get the note color elements
+let noteColorElements = document.querySelectorAll('.note-color-option');
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -309,6 +311,20 @@ async function exportMelody(){
 }
 // execute the export function on button click
 exportBtn.addEventListener('click', () => exportMelody());
+
+// change note color
+console.log('Note color elements:', noteColorElements);
+noteColorElements.forEach(element => {
+    console.log('Attaching event listener to:', element);
+    element.addEventListener('click', changeNoteColor)
+})
+function changeNoteColor(event) {
+    let selectedColor = event.target.getAttribute('data-color');
+    localStorage.setItem('noteColor', selectedColor);
+    console.log('Selected color:', selectedColor);
+    // change the css variable for the note color
+    document.documentElement.style.setProperty('--note-color', selectedColor); 
+}
 
 
 // randomize note breaks

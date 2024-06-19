@@ -1,6 +1,15 @@
 *{
     box-sizing: border-box;
 }
+:root{
+    --note-color: #77C7B3; /*default note color*/
+    --border-radius: 7px;
+    --black: #000;
+    --gray: #404040;
+    --white: #fff;
+    --white-transparent: rgba(255, 255, 255, 0.6);
+    --black-transparent: rgba(0, 0, 0, 0.6);
+}
 section.piano-roll-container{
     display: flex;
     justify-content: center;
@@ -39,7 +48,7 @@ section.piano-roll-container{
 /*the notes of the melody*/
 .note-lane>.note{
     position: absolute;
-    background-color: cornflowerblue;
+    background-color: var(--note-color);
     border-radius: 11px;
     width: 50px;
     height: 100%;
@@ -149,4 +158,37 @@ input#switch-scale:checked + label[for="switch-scale"]::before{
 /*export message*/
 .export-message{
     display: none;
+}
+/*note color selection*/
+.note-color-palette{
+    border-radius: var(--border-radius);
+    width: 200px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.note-color-palette>div{
+    width: 35px;
+    height: 35px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+.note-color1{
+    background-color: #D15C5C;
+}
+.note-color2{
+    background-color: #ABD975;
+}
+.note-color3{
+    background-color: #77C7B3;
+}
+.note-color4{
+    background-color: #7A60C0;
+}
+.note-color5{
+    background-color: #E37A91;
+}
+.note-color6{
+    background-color: #000;
 }
