@@ -52,6 +52,8 @@ let generateBtn = document.querySelector('#generate');
 let exportMsg = document.querySelector('.export-message');
 // get the note color elements
 let noteColorElements = document.querySelectorAll('.note-color-option');
+// get the container for the music notes in the music score visualization
+let musicScoreContainer = document.querySelector('.music-notes');
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -215,6 +217,7 @@ generateBtn.addEventListener('click', () => {
     playMelody(newMelody, newNoteLengths);
     cleanMelody();
     visualiseMelody(newMelody);
+    visualiseMelodyOnScore(newMelody);
 })
 
 function visualiseMelody(melody){
@@ -233,21 +236,53 @@ function visualiseMelody(melody){
                 allNoteLanes[k].appendChild(note);
                 noteTimelinePosition += 55; // 50 is the width of the notes, 5 is the gap between them
             }
-            //k = 0; // endless loop
         }
         k = 0;
     }
 }
 
+let musicNotesVerticalPositions = {
+    "C4": "170px",
+    "D4": "160px", //ok
+    "E4": "140px", //ok
+    "Eb4": "140px", //ok
+    "F4": "120px", //ok
+    "G4": "100px", //ok
+    "A4": "80px", //ok
+    "Ab4": "80px", //ok
+    "B4": "60px", //ok
+    "Bb4": "60px" //ok
+}
+function visualiseMelodyOnScore(melody){
+    let noteTimelinePosition = 120; // this var will be used to calculate the left position of each note
+    let i = 0;
+    for(i; i < melody.length; i++){ // for each melody note
+        let musicNotePosition = musicNotesVerticalPositions[melody[i]]; // map the vertical position of each note
+        console.log('vertical position for note ', melody[i], 'is ', musicNotePosition);
+        let musicNote = document.createElement("div");
+        musicNote.style.top = musicNotePosition;
+        musicNote.style.left = `${noteTimelinePosition}px`;
+        if(melody[i] === "C4"){ // for the note 'C' add an additional line through it with CSS
+            musicNote.classList.add("note-line");
+        }
+        musicNote.classList.add("music-note");
+        musicScoreContainer.appendChild(musicNote);
+        noteTimelinePosition += 60;
+    }
+}
+
 function cleanMelody(){ // removes all the .note dom elements once a new melody is generated
                         // source: https://www.geeksforgeeks.org/remove-all-the-child-elements-of-a-dom-node-in-javascript/
-    for(let i = 0; i < allNoteLanes.length; i++){ // for each note lane container
+    for(let i = 0; i < allNoteLanes.length; i++){ // clean the notes in the piano roll
         let child = allNoteLanes[i].lastElementChild;
         while (child){
             allNoteLanes[i].removeChild(child);
             child = allNoteLanes[i].lastElementChild;
         }
     }
+
+    // clean the notes in the music score
+    musicScoreContainer.innerHTML = "";
 }
 
 // export melody as MIDI file

@@ -10,6 +10,70 @@
     --white-transparent: rgba(255, 255, 255, 0.6);
     --black-transparent: rgba(0, 0, 0, 0.6);
 }
+body{
+    background-color: #090909;
+    color: var(--white);
+    padding: 20px;
+    width: 100%; /*hide the horizontal scroll bar that appears because of the noise animation*/
+    overflow-x: hidden;
+}
+.grain{
+    background-color: #1d1d1d;
+    border-radius: var(--border-radius);
+    position: relative;
+    height: max-content;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.grain::before{
+    background-image: url('images/grain.png');
+    position: absolute;
+    content: "";
+    height: 300%;
+    width: 300%;
+    left: -100%;
+    top: -100%;
+    animation-name: noise;
+    animation-iteration-count: infinite;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(20);
+}
+@keyframes noise {
+    0%{
+        transform: translate(-10%, 10%);
+    }
+    10%{
+        transform: translate(-25%, 0%);
+    }
+    20%{
+        transform: translate(-30%, 10%);
+    }
+    30%{
+        transform: translate(-30%, 30%);
+    }
+    40%{
+        transform: translate();
+    }
+    50%{
+        transform: translate(-15%, 10%);
+    }
+    60%{
+        transform: translate(-20%, 20%);
+    }
+    70%{
+        transform: translate(-5%, 20%);
+    }
+    80%{
+        transform: translate(-25%, 5%);
+    }
+    90%{
+        transform: translate(-30%, 25%);
+    }
+    100%{
+        transform: translate(-10%, 10%);
+    }
+}
+/*piano roll*/
 section.piano-roll-container{
     display: flex;
     justify-content: center;
@@ -162,7 +226,7 @@ input#switch-scale:checked + label[for="switch-scale"]::before{
 /*note color selection*/
 .note-color-palette{
     border-radius: var(--border-radius);
-    width: 200px;
+    width: 150px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -190,5 +254,79 @@ input#switch-scale:checked + label[for="switch-scale"]::before{
     background-color: #E37A91;
 }
 .note-color6{
+    background-color: #f4dd5d;
+}
+/*music score*/
+section.music-score-container{
+    display: flex;
+    justify-content: center;
+    background-image: url('images/paper-texture.jpg');
+}
+.music-score{
+    width: 80vw;
+    height: 200px;
+    background: repeating-linear-gradient(
+      to bottom,
+      black,         /* Line color */
+      black 2px,     /* Line thickness */
+      transparent 2px, /* Gap start */
+      transparent 40px /* Gap end */
+    );
+    position: relative;
+}
+img.g-clef-symbol{
+    position: absolute;
+    top: -7px;
+    width: 123px;
+    left: -10px;
+}
+.music-note{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 50%;
+    transform: skewX(-5deg); /*slant the note*/
+}
+/*key signature - symbols after the g clef that appear only in minor scale option*/
+/*the minor scale is in the key of C, so the flats are B, E and A*/
+.key-signature{
+    display: flex;
+    position: relative;
+    left: 100px; /*place the key signature after the g clef symbol*/
+}
+.flat-symbol{ /*create the stem of the symbol*/
+    width: 30px;
+    height: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 100px;
+    border-top-left-radius: 55px;
+    border: 3px solid black;
+    position: relative;
+}
+.flat-symbol::before{ /*create the line of the symbol*/
+    content: "";
+    width: 2px;
+    height: 60px;
     background-color: #000;
+    position: absolute;
+    top: -47px;
+    left: -2px;
+}
+/*position each of the key signatire symbols */
+.b-flat-symbol{
+    top: 60px;
+}
+.a-flat-symbol{
+    top: 80px;
+}
+/* add a note line for the C note*/
+.music-note.note-line::before{
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 2px;
+    background-color: #000;
+    top: 20px;
+    left: -22px;
 }
