@@ -1,5 +1,11 @@
+@font-face{
+    font-family: "geist"; /*source for font: https://github.com/vercel/geist-font*/
+    src: url("fonts/GeistVF.woff") format('woff'),
+    url("fonts/GeistVF.woff2") format('woff2');
+}
 *{
     box-sizing: border-box;
+    font-family: "geist";
 }
 :root{
     --note-color: #77C7B3; /*default note color*/
@@ -24,6 +30,7 @@ body{
     height: max-content;
     overflow-y: hidden;
     overflow-x: hidden;
+    padding: 20px;
 }
 .grain::before{
     background-image: url('images/grain.png');
@@ -166,58 +173,31 @@ section.piano-roll-container{
 .piano-keys-container>.black-key:nth-child(11){
     top: 448px;
 }
-/*toggle switch based on a Codepen by Marcus Burnette (source: https://codepen.io/mburnette/pen/LxNxNg)*/
-input#switch-scale{ /*hide the checkbox*/
-	height: 0;
-	width: 0;
-	visibility: hidden;
-}
-
-label[for="switch-scale"] {
-	cursor: pointer;
-	width: 100px;
-	height: 40px;
-	background: #f44025;
-	display: block;
-	border-radius: 100px;
-	position: relative;
-    margin-bottom: 10px;
-}
-
-label[for="switch-scale"]:after { /*the circle inside the toggle switch*/
-	content: '';
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	width: 30px;
-	height: 30px;
-	background: #fff;
-	border-radius: 90px;
-	transition: 0.3s;
-}
-
-input#switch-scale:checked + label[for="switch-scale"] {
-	background: #55c2da;
-}
-
-input#switch-scale:checked + label[for="switch-scale"]:after {
-	left: calc(100% - 5px);
-	transform: translateX(-100%);
-}
-
-label[for="switch-scale"]:active:after { /*creates an elastic effect when the toggle is switching*/
-	width: 50px;
+/* checkboxes for major/minor scale and piano roll/music score settings */
+input[type="checkbox"]{ /*hide the checkboxes for the scale and melody visualization settings*/
+	display: none;
 }
 label[for="switch-scale"]::before {
-    content: "Major";
+    content: "Major scale";
     position: absolute;
-    left: 40px;
-    top: 10px;
+}
+label[for="switch-visualization"]::before{
+    content: "Piano roll";
+    position: absolute;
 }
 input#switch-scale:checked + label[for="switch-scale"]::before{
-    content: "Minor";
-    left: auto;
-    right: 40px;
+    content: "Minor scale";
+}
+input#switch-visualization:checked + label[for="switch-visualization"]::before{
+    content: "Music score";
+}
+label[for="switch-scale"], label[for="switch-visualization"]{ /*increase the size of the labels, so they are clickable*/
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /*export message*/
 .export-message{
@@ -260,7 +240,10 @@ input#switch-scale:checked + label[for="switch-scale"]::before{
 section.music-score-container{
     display: flex;
     justify-content: center;
-    background-image: url('images/paper-texture.jpg');
+    background-image: url('images/Texturelabs_Paper_316M.jpg');
+    padding: 20px;
+    border-radius: var(--border-radius);
+    padding-top: 70px;
 }
 .music-score{
     width: 80vw;
@@ -291,7 +274,7 @@ img.g-clef-symbol{
 /*key signature - symbols after the g clef that appear only in minor scale option*/
 /*the minor scale is in the key of C, so the flats are B, E and A*/
 .key-signature{
-    display: flex;
+    display: none;
     position: relative;
     left: 100px; /*place the key signature after the g clef symbol*/
 }
@@ -329,4 +312,50 @@ img.g-clef-symbol{
     background-color: #000;
     top: 20px;
     left: -22px;
+}
+/*menu*/
+.menu-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+menu{
+    list-style-type: none;
+    padding-inline-start: 0; /*reset the default menu styling*/
+    margin: 0;
+    display: flex;
+    gap: 15px;
+    position: relative;
+    bottom: 50px;
+}
+menu>li.menu-card{
+    border-radius: var(--border-radius);
+    background-color: var(--black-transparent);
+    border: 1px solid var(--gray);
+    cursor: pointer;
+    font-size: 18px;
+    width: 150px;
+    height: 150px;
+}
+.menu-bar{
+    background-color: var(--black);
+    border-radius: var(--border-radius);
+    height: 80px;
+    margin: 0 auto;
+    padding-inline: 2rem;
+}
+.menu-btn{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    background: none;
+    appearance: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 18px;
+}
+button:disabled{
+    cursor: default;
+    color: #999;
 }

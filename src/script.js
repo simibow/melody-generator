@@ -27,10 +27,12 @@ import { log } from "tone/build/esm/core/util/Debug";
 // detect chords
 //console.log('chord detected is : ', Chord.detect(["D", "G", "C"]));
 
-let savedMelodyComponents = {};
-let isToneStarted = false;
+// define all the global variables
+
+let savedMelodyComponents = {}; // the melody notes and the lengths of each note for the last played melody are stored here
+let isToneStarted = false; // a flag to activate the Tone API only once
 // define a list of note lengths to be used in the melody generation
-let noteLengthsSelection = [ "8n", "4n", "8n", "8n", "8n", "8n", "8n"]; // "16n", "8n", "4n", "16n.", "8n.", "4n."
+let noteLengthsSelection = [ "8n", "4n", "8n", "8n", "8n", "8n", "8n"]; 
 let noteLengths = [];
 let generatedMusicContainer = document.querySelector('section.generated-music'); // where the note progression will be displayed on the page
 let melodyNotesContainer = document.createElement('div');
@@ -38,8 +40,12 @@ let melodyNotesContainer = document.createElement('div');
 let allNoteLanes = document.querySelectorAll('.note-lane');
 // get the scale toggle switch element
 let scaleToggle = document.querySelector('#switch-scale');
-// make sure the checkbox is unchecked on page reload
+// get the visualization toggle switch element
+let visualizationToggle = document.querySelector('#switch-visualization');
+console.log(visualizationToggle);
+// make sure the checkboxes are unchecked on page reload
 scaleToggle.checked = false;
+visualizationToggle.checked = false;
 // get the export button element
 let exportBtn = document.querySelector('#export');
 exportBtn.disabled = true;
@@ -54,6 +60,9 @@ let exportMsg = document.querySelector('.export-message');
 let noteColorElements = document.querySelectorAll('.note-color-option');
 // get the container for the music notes in the music score visualization
 let musicScoreContainer = document.querySelector('.music-notes');
+// get the key signature element
+let keySignature = document.querySelector('.key-signature');
+let noteTimelinePositionOnScore = 120; // this var will be used to calculate the left position of each note on the music score
 
 function generateMelody(){
     // randomize melody length - number of notes - keep it short
@@ -61,20 +70,29 @@ function generateMelody(){
     let maxMelodyLength = 15;
     let melodyLength = 0;
     melodyLength = Math.floor(Math.random() * (maxMelodyLength - minMelodyLength + 1)) + minMelodyLength;
-    //console.log('melodyLength is ', melodyLength);
-    //let notes = new Array(melodyLength);
     let notes = [];
     noteLengths = []; // reset the array
-    // randomize pitch
+    // get the chosen type of scale and base the melody notes on it
     let scaleNotes; // define the container for the notes of the chosen scale
     if (scaleToggle.checked){
         scaleNotes = Scale.get("C minor").notes;
+        console.log('minor scale chosen');
     }
     else{
         scaleNotes = Scale.get("C major").notes;
+        console.log('major scale chosen');
     }
-    // document.getElementById("checkbox_id").checked => returns true if checked
-
+    // reset the position of the notes in the music score
+    console.log('is visualization toggle checked: ', visualizationToggle.checked);
+    if(visualizationToggle.checked){ // if the chosen scale is minor
+        noteTimelinePositionOnScore = 180; // add more space to account for the key signature
+        console.log('generating melody for a minor scale');
+    }
+    else{ // if the scale is major
+        noteTimelinePositionOnScore = 120;
+        console.log('generating melody for a major scale');
+    }
+    // randomize pitch
     function getRandomScaleNote(){
         return Math.floor(Math.random() * scaleNotes.length); // returns random int from 0 to 6
     }
@@ -114,6 +132,29 @@ function generateMelody(){
     let melodyComponents = { melodyLine: mappedNotes, noteLengths: noteLengths };
     return melodyComponents;
 }
+
+// get the chosen melody visualization method
+
+// add an event listener on the visualization checkbox, so the key signature can be changed immediately
+document.addEventListener("DOMContentLoaded", function(){
+    if(visualizationToggle){
+    visualizationToggle.addEventListener('change', function(){
+        if(visualizationToggle.checked){ // if the chosen scale is minor
+            keySignature.style.display = 'flex'; // show the key signatire for the key of C minor
+            noteTimelinePositionOnScore = 180; // add more space to account for the key signature
+            console.log('scale changed to minor');
+        }
+        else{ // if the scale is major
+            keySignature.style.display = 'none'; // hide the key signature because C major doesn;t have any accidentals
+            noteTimelinePositionOnScore = 120;
+        }
+    })
+    }
+    else{
+        console.log('visualization element not found');
+    }
+})
+
 
 
 // select the instrument
@@ -229,7 +270,7 @@ function visualiseMelody(melody){
         for(k; k < allNoteLanes.length; k++){
             //console.log('enter for(k): ', allNoteLanes[k]);
             if (allNoteLanes[k].dataset.value === melody[i]){
-                console.log('match found: ', allNoteLanes[k], ' and ', melody[i]);
+                //console.log('match found: ', allNoteLanes[k], ' and ', melody[i]);
                 let note = document.createElement("div");
                 note.style.left = `${noteTimelinePosition}px`;
                 note.className = 'note';
@@ -254,20 +295,20 @@ let musicNotesVerticalPositions = {
     "Bb4": "60px" //ok
 }
 function visualiseMelodyOnScore(melody){
-    let noteTimelinePosition = 120; // this var will be used to calculate the left position of each note
+    
     let i = 0;
     for(i; i < melody.length; i++){ // for each melody note
         let musicNotePosition = musicNotesVerticalPositions[melody[i]]; // map the vertical position of each note
-        console.log('vertical position for note ', melody[i], 'is ', musicNotePosition);
+        //console.log('horizontal position for note ', melody[i], 'is ', noteTimelinePositionOnScore);
         let musicNote = document.createElement("div");
         musicNote.style.top = musicNotePosition;
-        musicNote.style.left = `${noteTimelinePosition}px`;
+        musicNote.style.left = `${noteTimelinePositionOnScore}px`;
         if(melody[i] === "C4"){ // for the note 'C' add an additional line through it with CSS
             musicNote.classList.add("note-line");
         }
         musicNote.classList.add("music-note");
         musicScoreContainer.appendChild(musicNote);
-        noteTimelinePosition += 60;
+        noteTimelinePositionOnScore += 60;
     }
 }
 
