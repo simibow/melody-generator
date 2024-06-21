@@ -8,7 +8,9 @@
 </head>
 <body>
     <div class="grain">
+
         <section class="generated-music"></section>
+
         <section class="piano-roll-container">
             <div class="piano">
                 <div class="decorative-line"></div>
@@ -42,6 +44,19 @@
                 <div class="note-lane c-lane" data-value="C4"></div>
             </div>
         </section>
+
+        <section class="music-score-container">
+            <div class="music-score">
+                <img src="/images/G-clef.svg" alt="G clef" class="g-clef-symbol">
+                <div class="key-signature">
+                    <div class="b-flat-symbol flat-symbol"></div>
+                    <div class="e-flat-symbol flat-symbol"></div>
+                    <div class="a-flat-symbol flat-symbol"></div>
+                </div>
+                <div class="music-notes"></div><!-- where the music notes will be appended -->
+            </div>
+        </section>
+
         <div class="menu-container">
             <div class="menu-bar">
                 <menu>
@@ -65,7 +80,7 @@
                             <div class="note-color1 note-color-option" data-color="#D15C5C"></div>
                             <div class="note-color2 note-color-option" data-color="#ABD975"></div>
                             <div class="note-color3 note-color-option" data-color="#77C7B3"></div>
-                            <div class="note-color4 note-color-option" data-color="#7A60C0"></div>
+                            <div class="note-color4 note-color-option" data-color="#B383F9"></div>
                             <div class="note-color5 note-color-option" data-color="#E37A91"></div>
                             <div class="note-color6 note-color-option" data-color="#f4dd5d"></div>
                         </div>
@@ -76,18 +91,7 @@
         </div>
         
         <div class="export-message">Melody successfully exported as output.mid</div>
-
-        <section class="music-score-container">
-            <div class="music-score">
-                <img src="/images/G-clef.svg" alt="G clef" class="g-clef-symbol">
-                <div class="key-signature">
-                    <div class="b-flat-symbol flat-symbol"></div>
-                    <div class="e-flat-symbol flat-symbol"></div>
-                    <div class="a-flat-symbol flat-symbol"></div>
-                </div>
-                <div class="music-notes"></div><!-- where the music notes will be appended -->
-            </div>
-        </section>
+        
     </div>
 
     <script type="module" src="/src/script.js" defer></script>

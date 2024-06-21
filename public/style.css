@@ -85,6 +85,7 @@ section.piano-roll-container{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 540px;
 }
 .note-lanes-container{
     width: 70vw;
@@ -228,7 +229,7 @@ label[for="switch-scale"], label[for="switch-visualization"]{ /*increase the siz
     background-color: #77C7B3;
 }
 .note-color4{
-    background-color: #7A60C0;
+    background-color: #B383F9;
 }
 .note-color5{
     background-color: #E37A91;
@@ -238,12 +239,13 @@ label[for="switch-scale"], label[for="switch-visualization"]{ /*increase the siz
 }
 /*music score*/
 section.music-score-container{
-    display: flex;
+    display: none;
     justify-content: center;
     background-image: url('images/Texturelabs_Paper_316M.jpg');
     padding: 20px;
     border-radius: var(--border-radius);
     padding-top: 70px;
+    height: 540px;
 }
 .music-score{
     width: 80vw;

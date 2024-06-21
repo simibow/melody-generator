@@ -60,6 +60,10 @@ let exportMsg = document.querySelector('.export-message');
 let noteColorElements = document.querySelectorAll('.note-color-option');
 // get the container for the music notes in the music score visualization
 let musicScoreContainer = document.querySelector('.music-notes');
+// get the container for the whole music score element
+let musicScoreElement = document.querySelector('section.music-score-container');
+// get the container for the piano roll element
+let pianoRollElement = document.querySelector('section.piano-roll-container');
 // get the key signature element
 let keySignature = document.querySelector('.key-signature');
 let noteTimelinePositionOnScore = 120; // this var will be used to calculate the left position of each note on the music score
@@ -77,21 +81,25 @@ function generateMelody(){
     if (scaleToggle.checked){
         scaleNotes = Scale.get("C minor").notes;
         console.log('minor scale chosen');
+        noteTimelinePositionOnScore = 220; // add more space to account for the key signature
+        keySignature.style.display = 'flex'; // show the key signatire for the key of C minor
     }
     else{
         scaleNotes = Scale.get("C major").notes;
         console.log('major scale chosen');
+        noteTimelinePositionOnScore = 120;
+        keySignature.style.display = 'none';
     }
     // reset the position of the notes in the music score
     console.log('is visualization toggle checked: ', visualizationToggle.checked);
-    if(visualizationToggle.checked){ // if the chosen scale is minor
-        noteTimelinePositionOnScore = 180; // add more space to account for the key signature
-        console.log('generating melody for a minor scale');
-    }
-    else{ // if the scale is major
-        noteTimelinePositionOnScore = 120;
-        console.log('generating melody for a major scale');
-    }
+    // if(visualizationToggle.checked){ // if the chosen scale is minor
+    //     noteTimelinePositionOnScore = 180; // add more space to account for the key signature
+    //     console.log('generating melody for a minor scale');
+    // }
+    // else{ // if the scale is major
+    //     noteTimelinePositionOnScore = 120;
+    //     console.log('generating melody for a major scale');
+    // }
     // randomize pitch
     function getRandomScaleNote(){
         return Math.floor(Math.random() * scaleNotes.length); // returns random int from 0 to 6
@@ -135,26 +143,17 @@ function generateMelody(){
 
 // get the chosen melody visualization method
 
-// add an event listener on the visualization checkbox, so the key signature can be changed immediately
-document.addEventListener("DOMContentLoaded", function(){
-    if(visualizationToggle){
-    visualizationToggle.addEventListener('change', function(){
-        if(visualizationToggle.checked){ // if the chosen scale is minor
-            keySignature.style.display = 'flex'; // show the key signatire for the key of C minor
-            noteTimelinePositionOnScore = 180; // add more space to account for the key signature
-            console.log('scale changed to minor');
-        }
-        else{ // if the scale is major
-            keySignature.style.display = 'none'; // hide the key signature because C major doesn;t have any accidentals
-            noteTimelinePositionOnScore = 120;
-        }
-    })
+// change the visualization method based on the chosen option
+visualizationToggle.addEventListener('change', function(){
+    if(visualizationToggle.checked){ // music score chosen
+        musicScoreElement.style.display = 'flex';
+        pianoRollElement.style.display = 'none';
     }
-    else{
-        console.log('visualization element not found');
+    else{ // piano roll chosen
+        musicScoreElement.style.display = 'none';
+        pianoRollElement.style.display = 'flex';
     }
 })
-
 
 
 // select the instrument
@@ -284,15 +283,15 @@ function visualiseMelody(melody){
 
 let musicNotesVerticalPositions = {
     "C4": "170px",
-    "D4": "160px", //ok
-    "E4": "140px", //ok
-    "Eb4": "140px", //ok
-    "F4": "120px", //ok
-    "G4": "100px", //ok
-    "A4": "80px", //ok
-    "Ab4": "80px", //ok
-    "B4": "60px", //ok
-    "Bb4": "60px" //ok
+    "D4": "160px", 
+    "E4": "140px", 
+    "Eb4": "140px", 
+    "F4": "120px", 
+    "G4": "100px", 
+    "A4": "80px", 
+    "Ab4": "80px", 
+    "B4": "60px", 
+    "Bb4": "60px" 
 }
 function visualiseMelodyOnScore(melody){
     
