@@ -157,7 +157,7 @@ visualizationToggle.addEventListener('change', function(){
 
 
 // select the instrument
-let instrumentElement = document.querySelector('#select-instrument');
+// let instrumentElement = document.querySelector('#select-instrument');
 let instrument;
 let instrumentSound;
 let instrumentsSelection = {
@@ -204,16 +204,29 @@ let instrumentsSelection = {
 
 // Set default instrument sound
 instrumentSound = instrumentsSelection['mono synth']; 
-instrumentElement.value = 'mono synth'; // set default option
+// instrumentElement.value = 'mono synth'; // set default option
 
-instrumentElement.addEventListener('change', async function(){
-    instrument = instrumentElement.value;
-    console.log('instrument changed!: ', instrument);
-    instrumentSound = instrumentsSelection[instrument];
-    // if (instrument === 'piano') {
-    //     await instrumentSound.load();  // sampler returns a promise so we need to load the samples before using the piano
-    // }
-})
+// instrumentElement.addEventListener('change', async function(){
+//     instrument = instrumentElement.value;
+//     console.log('instrument changed!: ', instrument);
+//     instrumentSound = instrumentsSelection[instrument];
+// })
+// Get all radio buttons with name 'instrument'
+let instrumentElements = document.querySelectorAll('input[name="instrument"]');
+
+// Add event listeners to each radio button
+instrumentElements.forEach(radio => {
+    radio.addEventListener('change', function() {
+        if (radio.checked) {
+            instrument = radio.value;
+            console.log('instrument changed!: ', instrument);
+            instrumentSound = instrumentsSelection[instrument];
+        }
+    });
+});
+
+// Trigger change event on the checked radio button to set the default instrument
+document.querySelector('input[name="instrument"]:checked').dispatchEvent(new Event('change'));
 
 //const synth = new Tone.Synth().toDestination(); // define a mono synth and route it to your speakers
 

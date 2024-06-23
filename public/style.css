@@ -6,6 +6,8 @@
 *{
     box-sizing: border-box;
     font-family: "geist";
+    letter-spacing: 0.1px;
+    line-height: 1.6rem;
 }
 :root{
     --note-color: #77C7B3; /*default note color*/
@@ -80,6 +82,13 @@ body{
         transform: translate(-10%, 10%);
     }
 }
+/*header*/
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
 /*piano roll*/
 section.piano-roll-container{
     display: flex;
@@ -97,25 +106,25 @@ section.piano-roll-container{
     position: relative;
 }
 .note-lane:nth-child(odd){
-    background-color: gray;
+    background-color: #161616;
 }
 .note-lane:nth-child(even){
-    background-color: rgb(97, 94, 94);
+    background-color: #090909;
 }
 .note-lane:nth-child(8){
-    background-color: gray;
+    background-color: #161616;
 }
 .note-lane:nth-child(9){
-    background-color: rgb(97, 94, 94);
+    background-color: #090909;
 }
 .note-lane:nth-child(10){
-    background-color: gray;
+    background-color: #161616;
 }
 .note-lane:nth-child(11){
-    background-color: rgb(97, 94, 94);
+    background-color: #090909;
 }
 .note-lane:nth-child(12){
-    background-color: gray;
+    background-color: #161616;
 }
 /*the notes of the melody*/
 .note-lane>.note{
@@ -131,7 +140,7 @@ section.piano-roll-container{
     background-color: black;
 }
 .piano{
-    background-color: rgb(158, 126, 126);
+    background-color: #090909;
     width: 200px;
     height: 540px; /*height equals height of note lanes*/
     display: flex;
@@ -145,7 +154,8 @@ section.piano-roll-container{
 .piano-keys-container>div{
     flex: 1;
     width: 100%;
-    border: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -207,15 +217,25 @@ label[for="switch-scale"], label[for="switch-visualization"]{ /*increase the siz
 /*note color selection*/
 .note-color-palette{
     border-radius: var(--border-radius);
-    width: 150px;
+    width: 130px;
     padding: 5px;
-    display: flex;
     flex-wrap: wrap;
     gap: 15px;
+    position: absolute;
+    top: -100px;
+    display: none;
+    background-color: var(--black-transparent);
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    cursor: default;
+}
+.relative{
+    position: relative;
 }
 .note-color-palette>div{
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
     border-radius: var(--border-radius);
     cursor: pointer;
 }
@@ -237,6 +257,65 @@ label[for="switch-scale"], label[for="switch-visualization"]{ /*increase the siz
 .note-color6{
     background-color: #f4dd5d;
 }
+/*logic for toggling the note color palette visibility*/
+input#toggle-note-color-palette:checked~.note-color-palette{
+    display: flex;
+}
+label[for="toggle-note-color-palette"], label[for="toggle-instrument-dropdown"]{ /*make the labels as big as the menu cards*/
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+/*instrument selection dropdown*/
+.instrument-dropdown{
+    display: none;
+    border-radius: var(--border-radius);
+    background-color: var(--black-transparent);
+    padding: 5px;
+    width: 130px;
+    font-size: 16px;
+}
+input#toggle-instrument-dropdown:checked~.instrument-dropdown{
+    display: block;
+    position: absolute;
+    top: -122px;
+}
+/*reset the default radio button styling and add a custom white circle to only the selected option*/
+.instrument-option{
+    position: relative;
+}
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    background-color: transparent;
+}
+input[type="radio"] + label{
+    color: var(--white-transparent);
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+input[type="radio"]:checked + label {
+    margin-left: 15px; /* Add margin to make space for the circle */
+    color: var(--white);
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--white);
+    border-radius: 50%;
+}
+
 /*music score*/
 section.music-score-container{
     display: none;
@@ -320,6 +399,7 @@ img.g-clef-symbol{
     position: relative;
     display: flex;
     justify-content: center;
+    margin-top: 3rem;
 }
 menu{
     list-style-type: none;
@@ -328,7 +408,7 @@ menu{
     display: flex;
     gap: 15px;
     position: relative;
-    bottom: 50px;
+    bottom: 20px;
 }
 menu>li.menu-card{
     border-radius: var(--border-radius);
@@ -336,8 +416,12 @@ menu>li.menu-card{
     border: 1px solid var(--gray);
     cursor: pointer;
     font-size: 18px;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 90px;
+}
+li.line-divider{
+    height: 90px;
+    border-right: 1px solid var(--white-transparent);
 }
 .menu-bar{
     background-color: var(--black);

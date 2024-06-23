@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="grain">
+        <header><h1>Melody generator</h1></header>
 
         <section class="generated-music"></section>
 
@@ -63,19 +64,40 @@
                     <li class="menu-card"><button id="replay" class="menu-btn">Replay</button></li> 
                     <li class="menu-card"><button id="generate" class="menu-btn">Generate</button></li>
                     <li class="menu-card"><button id="export" class="menu-btn">Export</button></li>
-                    <li>|</li>
+                    <li class="line-divider"></li>
                     <li class="menu-card"><input type="checkbox" id="switch-scale"/><label for="switch-scale"></label></li>
                     <li class="menu-card"><input type="checkbox" id="switch-visualization"/><label for="switch-visualization"></label></li>
-                    <li class="menu-card">
-                        <label for="select-instrument">Instrument: </label>
-                        <select id="select-instrument">
+                    <li class="menu-card relative">
+                        <input type="checkbox" id="toggle-instrument-dropdown">
+                        <label for="toggle-instrument-dropdown">Instrument</label>
+                        <div class="instrument-dropdown">
+                            <div class="instrument-option">
+                                <input type="radio" id="mono-synth" name="instrument" value="mono synth" checked>
+                                <label for="mono-synth">Mono synth</label>
+                            </div>
+                            <div class="instrument-option">
+                                <input type="radio" id="fm-synth" name="instrument" value="fm synth">
+                                <label for="fm-synth">FM synth</label>
+                            </div>
+                            <div class="instrument-option">
+                                <input type="radio" id="pluck-synth" name="instrument" value="pluck synth">
+                                <label for="pluck-synth">Pluck synth</label>
+                            </div>
+                            <div class="instrument-option">
+                                <input type="radio" id="piano" name="instrument" value="piano">
+                                <label for="piano">Piano</label>
+                            </div>
+                        </div>
+                        <!-- <select id="select-instrument">
                             <option value="mono synth" selected>Mono synth</option>
                             <option value="fm synth">FM synth</option>
                             <option value="pluck synth">Pluck synth</option>
                             <option value="piano">Piano</option>
-                        </select>
+                        </select> -->
                     </li>
-                    <li class="menu-card">
+                    <li class="menu-card relative">
+                        <input type="checkbox" id="toggle-note-color-palette">
+                        <label for="toggle-note-color-palette">Note color</label>
                         <div class="note-color-palette">
                             <div class="note-color1 note-color-option" data-color="#D15C5C"></div>
                             <div class="note-color2 note-color-option" data-color="#ABD975"></div>
