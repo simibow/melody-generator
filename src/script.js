@@ -353,49 +353,64 @@ async function exportMelody(){
     // Output the MIDI file as a base64 string
     let midiString = write.base64();
     console.log(midiString);
-    try {
-        let response = await fetch('http://localhost:3000/save-midi', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ midiData: midiString }),
-        });
-        console.log('Response status:', response.status);
+    // save the file to disk
+    fetch('http://localhost:3000/save-midi', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ midiData: midiString }),
+    })
+    .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Network response was not ok');
         }
-        if(response.ok){
-            let data = await response.json();
-            console.log('Server says: ', data);
-            // when the response message is sent, display a message indicating successful save
-            exportMsg.style.display = 'block';
-            setTimeout(() => {
-                exportMsg.style.display = 'none';
-            }, 5000);
+        return response.blob();
+    })
+    .then(blob => {
+        if (blob.size === 0) {
+            throw new Error('Received an empty blob');
         }
-    } catch (error) {
-        console.error('Export error: ', error);
-    }
-    // fetch('http://localhost:3000/save-midi', { // send the midi string to a server endpoint
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ midiData: midiString }),
-    // })
-    // .then(response => {
+        // Get the hidden link element
+        const link = document.querySelector('#download-link');
+        // Create a URL for the blob
+        const url = window.URL.createObjectURL(blob);
+        // Set the link's href to point to the blob URL
+        link.href = url;
+        // Set the download attribute to specify the filename
+        link.download = 'output.mid';
+        // Programmatically click the link to trigger the download
+        link.click();
+        // Revoke the object URL to free up resources
+        window.URL.revokeObjectURL(url);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    // try {
+    //     let response = await fetch('http://localhost:3000/save-midi', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ midiData: midiString }),
+    //     });
+    //     console.log('Response status:', response.status);
     //     if (!response.ok) {
     //         throw new Error(`HTTP error! status: ${response.status}`);
     //     }
-    //     return response.json();
-    // })
-    // .then(data => { // data is the response message wuth status 200
-    //     console.log('Success:', data);
-    // })
-    // .catch((error) => {
-    //     console.error('Error:', error);
-    // });
+    //     if(response.ok){
+    //         let data = await response.json();
+    //         console.log('Server says: ', data);
+    //         // when the response message is sent, display a message indicating successful save
+    //         exportMsg.style.display = 'block';
+    //         setTimeout(() => {
+    //             exportMsg.style.display = 'none';
+    //         }, 5000);
+    //     }
+    // } catch (error) {
+    //     console.error('Export error: ', error);
+    // }
 }
 // execute the export function on button click
 exportBtn.addEventListener('click', () => exportMelody());

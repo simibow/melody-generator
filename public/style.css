@@ -445,3 +445,7 @@ button:disabled{
     cursor: default;
     color: #999;
 }
+/*hidden download link*/
+a#download-link{
+    display: none;
+}
