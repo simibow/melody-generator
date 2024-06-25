@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="31.750004mm"
+   height="23.812502mm"
+   viewBox="0 0 31.750004 23.812502"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="card-melody.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0141844"
+     inkscape:cx="320.45455"
+     inkscape:cy="324.89162"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-56.284562,-35.116397)">
+    <path
+       id="rect1"
+       style="fill:none;stroke:#404040;stroke-width:0.182418;stroke-linecap:round"
+       d="M 86.974874,58.837686 H 62.413533 c -0.03008,-0.01847 -6.037762,-4.961185 -6.037762,-4.961185 V 36.176084 c 0,-0.536537 0.431942,-0.96848 0.968479,-0.96848 h 29.630624 c 0.536538,0 0.968479,0.431943 0.968479,0.96848 v 21.693123 c 0,0.536538 -0.431942,0.968479 -0.968479,0.968479 z"
+       sodipodi:nodetypes="sccssssss"
+       inkscape:export-filename="..\Media Sem3\codings\passion-project\public\images\card-bg.svg"
+       inkscape:export-xdpi="7.69697"
+       inkscape:export-ydpi="7.69697" />
+  </g>
+</svg>

@@ -8,7 +8,28 @@
 </head>
 <body>
     <div class="grain">
-        <header><h1>Melody generator</h1></header>
+        <header>
+            <div class="project-title">
+                <div class="stylized-m">
+                    <div class="m-line"></div>
+                    <div class="m-line"></div>
+                    <div class="m-line"></div>
+                    <div class="m-line"></div>
+                    <div class="m-line"></div>
+                </div>
+                <h1>elody</h1>
+                <img src="/images/sound-wave.svg" class="sound-wave-img">
+                <div class="stylized-g relative">
+                    <div class="g-line"></div>
+                    <div class="g-line"></div>
+                    <div class="g-line"></div>
+                    <div class="g-line"></div>
+                    <div class="g-line"></div>
+                    <!-- <div class="g-line"></div> -->
+                </div>
+                <h1>enerator</h1>
+            </div>
+        </header>
 
         <section class="generated-music"></section>
 
@@ -58,18 +79,90 @@
             </div>
         </section>
 
-        <div class="menu-container">
+        <div class="menu-container"> 
             <div class="menu-bar">
-                <menu>
-                    <li class="menu-card"><button id="replay" class="menu-btn">Replay</button></li> 
-                    <li class="menu-card"><button id="generate" class="menu-btn">Generate</button></li>
-                    <li class="menu-card"><button id="export" class="menu-btn">Export</button></li>
-                    <li class="line-divider"></li>
-                    <li class="menu-card"><input type="checkbox" id="switch-scale"/><label for="switch-scale"></label></li>
-                    <li class="menu-card"><input type="checkbox" id="switch-visualization"/><label for="switch-visualization"></label></li>
-                    <li class="menu-card relative">
+                <!--The lines that appear on hover inside the cards required the <menu> and <li> elements to be restructured into divs  -->
+                <div class="menu"> 
+                    <div class="menu-card">
+                        <button id="replay" class="menu-btn">Replay</button>
+                        <div class="volume-lines">
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                        </div>
+                    </div> 
+                    <div class="menu-card">
+                        <button id="generate" class="menu-btn">Generate</button>
+                        <div class="volume-lines">
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <button id="export" class="menu-btn">Export</button>
+                        <div class="volume-lines">
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                        </div>
+                    </div>
+                    <!-- <li class="line-divider"></li> -->
+                    <div class="menu-card card-bg-2">
+                        <input type="checkbox" id="switch-scale"/>
+                        <label for="switch-scale"></label>
+                        <div class="volume-lines volume-lines2">
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                            <div class="volume-line"></div>
+                        </div>
+                    </div>
+                    <div class="menu-card card-bg-2">
+                        <div class="volume-lines-wrapper">
+                            <input type="checkbox" id="switch-visualization"/>
+                            <label for="switch-visualization"></label>
+                        
+                            <div class="volume-lines volume-lines2">
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
                         <input type="checkbox" id="toggle-instrument-dropdown">
-                        <label for="toggle-instrument-dropdown">Instrument</label>
+                        <div class="menu-card card-bg-2"> 
+                            <label for="toggle-instrument-dropdown">Instrument</label>
+                            <div class="volume-lines volume-lines2">
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                            </div>
+                        </div>
                         <div class="instrument-dropdown">
                             <div class="instrument-option">
                                 <input type="radio" id="mono-synth" name="instrument" value="mono synth" checked>
@@ -88,16 +181,21 @@
                                 <label for="piano">Piano</label>
                             </div>
                         </div>
-                        <!-- <select id="select-instrument">
-                            <option value="mono synth" selected>Mono synth</option>
-                            <option value="fm synth">FM synth</option>
-                            <option value="pluck synth">Pluck synth</option>
-                            <option value="piano">Piano</option>
-                        </select> -->
-                    </li>
-                    <li class="menu-card relative">
+                    </div>
+                    <div class="relative">
                         <input type="checkbox" id="toggle-note-color-palette">
-                        <label for="toggle-note-color-palette">Note color</label>
+                        <div class="menu-card card-bg-2"> 
+                            <label for="toggle-note-color-palette">Note color</label>
+                            <div class="volume-lines volume-lines2">
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                                <div class="volume-line"></div>
+                            </div>
+                        </div>
                         <div class="note-color-palette">
                             <div class="note-color1 note-color-option" data-color="#D15C5C"></div>
                             <div class="note-color2 note-color-option" data-color="#ABD975"></div>
@@ -106,8 +204,9 @@
                             <div class="note-color5 note-color-option" data-color="#E37A91"></div>
                             <div class="note-color6 note-color-option" data-color="#f4dd5d"></div>
                         </div>
-                    </li>
-                </menu>
+                    </div>
+                    
+                </div>
             </div>
             
         </div>
