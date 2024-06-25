@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180.76791mm"
+   height="75.132683mm"
+   viewBox="0 0 180.76791 75.132683"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="sound-wave-melody-prj.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.71713665"
+     inkscape:cx="246.11767"
+     inkscape:cy="721.61979"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-5.1893255,-92.327527)">
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.72;stroke-linecap:round;stroke-linejoin:round"
+       d="m 39.656288,130.44143 c 0,0 14.150926,-37.312558 27.718229,-37.25383 13.567303,0.05873 27.81306,37.25383 27.81306,37.25383 0,0 13.102343,35.82547 28.777643,36.15652 15.6753,0.33105 27.12691,-36.15652 27.12691,-36.15652"
+       id="path4"
+       sodipodi:nodetypes="czszc" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:0.981565;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.6"
+       d="M 5.6801079,130.31099 H 185.46645"
+       id="path5"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>

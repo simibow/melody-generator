@@ -120,40 +120,49 @@ header{
     height: 40px;
 }
 img.sound-wave-img{
-    width: 160px;
+    width: 180px;
     margin-inline: 10px;
+    align-self: center;
+}
+.header-line{
+    width: 180px;
+    height: 3px;
+    background-color: var(--white);
+    margin-inline: 10px;
+    align-self: center;
 }
 .stylized-g{
     align-self: flex-start;
     position: relative;
-    top: 13px;
+    top: -3px;
 }
 .g-line{
     position: relative;
 }
 .g-line:nth-child(1){
-    height: 20px;
-    top: -10px;
+    height: 25px;
+    top: -3px;
 }
 .g-line:nth-child(2){
-    height: 30px;
-    top: -6px;
+    height: 37px;
+    top: 3px;
 }
 .g-line:nth-child(3){
-    height: 40px;
+    height: 47px;
+    top: 7px;
 }
 .g-line:nth-child(4){
     height: 15px;
-    top: -10px;
+    top: 0px;
 }
 .g-line:nth-child(5){
     height: 8px;
-    top: -17px;
+    top: -7px;
 }
-.g-line:nth-child(6){
+/* .g-line:nth-child(6){
     height: 5px;
     top: -20px;
-}
+} */
 /*piano roll*/
 section.piano-roll-container{
     display: flex;
