@@ -3,30 +3,6 @@ import * as Tone from "tone"; // Tone.js is the API for playing the sounds
 import MidiWriter from 'midi-writer-js';
 import { log } from "tone/build/esm/core/util/Debug";
 
-
-// The join() method of Array instances creates and returns a new string by concatenating all of the elements in this array, 
-// separated by commas or a specified separator string. If the array has only one item, then that item will be returned 
-// without using the separator. 
-
-// let everyScale = Scale.names().join(', ');
-
-// let generatedMusicContainer = document.querySelector('section.generated-music');
-// let scalesContainer = document.createElement('div');
-// scalesContainer.innerText = everyScale;
-// generatedMusicContainer.appendChild(scalesContainer);
-
-// detect scales
-//console.log('detected scale from given notes is: ', Scale.detect(["C", "D", "G#", "A", "B"], { tonic: "A" }));
-
-// print all scale type
-// let nonPentatonicScales = ScaleType.all()
-// .filter((scaleType) => scaleType.intervals.length === 7);
-
-//console.log('all scale types: ', nonPentatonicScales);
-
-// detect chords
-//console.log('chord detected is : ', Chord.detect(["D", "G", "C"]));
-
 // define all the global variables
 
 let savedMelodyComponents = {}; // the melody notes and the lengths of each note for the last played melody are stored here
@@ -34,8 +10,8 @@ let isToneStarted = false; // a flag to activate the Tone API only once
 // define a list of note lengths to be used in the melody generation
 let noteLengthsSelection = [ "8n", "4n", "8n", "8n", "8n", "8n", "8n"]; 
 let noteLengths = [];
-let generatedMusicContainer = document.querySelector('section.generated-music'); // where the note progression will be displayed on the page
-let melodyNotesContainer = document.createElement('div');
+// let generatedMusicContainer = document.querySelector('section.generated-music'); // where the note progression will be displayed on the page
+// let melodyNotesContainer = document.createElement('div');
 // get a node list of the note containers
 let allNoteLanes = document.querySelectorAll('.note-lane');
 // get the scale toggle switch element
@@ -264,9 +240,9 @@ generateBtn.addEventListener('click', () => {
     let newNoteLengths = newMelodyComponenets.noteLengths;
     console.log('melody generated: ', newMelody, 'with lengths ', newNoteLengths);
     // display the note progression on the page
-    let displayedMelodyString = newMelody.join(', ');
-    melodyNotesContainer.innerText = displayedMelodyString;
-    generatedMusicContainer.appendChild(melodyNotesContainer);
+    // let displayedMelodyString = newMelody.join(', ');
+    // melodyNotesContainer.innerText = displayedMelodyString;
+    // generatedMusicContainer.appendChild(melodyNotesContainer);
     playMelody(newMelody, newNoteLengths);
     cleanMelody();
     visualiseMelody(newMelody);
@@ -354,7 +330,7 @@ async function exportMelody(){
     let midiString = write.base64();
     console.log(midiString);
     // save the file to disk
-    fetch('http://localhost:3000/save-midi', {
+    fetch('/save-midi', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

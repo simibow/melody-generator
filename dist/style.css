@@ -1,0 +1,590 @@
+@font-face{
+    font-family: "geist"; /*source for font: https://github.com/vercel/geist-font*/
+    src: url("fonts/GeistMonoVF.woff") format('woff'),
+    url("fonts/GeistMonoVF.woff2") format('woff2');
+}
+*{
+    box-sizing: border-box;
+    font-family: "geist";
+    letter-spacing: -1px;
+    line-height: 1.6rem;
+}
+:root{
+    --note-color: #77C7B3; /*default note color*/
+    --border-radius: 7px;
+    --black: #000;
+    --gray: #404040;
+    --white: #fff;
+    --white-transparent: rgba(255, 255, 255, 0.6);
+    --black-transparent: rgba(0, 0, 0, 0.6);
+}
+body{
+    background-color: #090909;
+    color: var(--white);
+    padding: 20px;
+    width: 100%; /*hide the horizontal scroll bar that appears because of the noise animation*/
+    overflow-x: hidden;
+}
+.grain{
+    background-color: #1d1d1d;
+    border-radius: var(--border-radius);
+    position: relative;
+    height: max-content;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 20px;
+}
+.grain::before{
+    background-image: url('images/grain.png');
+    position: absolute;
+    content: "";
+    height: 300%;
+    width: 300%;
+    left: -100%;
+    top: -100%;
+    animation-name: noise;
+    animation-iteration-count: infinite;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(20);
+}
+@keyframes noise {
+    0%{
+        transform: translate(-10%, 10%);
+    }
+    10%{
+        transform: translate(-25%, 0%);
+    }
+    20%{
+        transform: translate(-30%, 10%);
+    }
+    30%{
+        transform: translate(-30%, 30%);
+    }
+    40%{
+        transform: translate();
+    }
+    50%{
+        transform: translate(-15%, 10%);
+    }
+    60%{
+        transform: translate(-20%, 20%);
+    }
+    70%{
+        transform: translate(-5%, 20%);
+    }
+    80%{
+        transform: translate(-25%, 5%);
+    }
+    90%{
+        transform: translate(-30%, 25%);
+    }
+    100%{
+        transform: translate(-10%, 10%);
+    }
+}
+/*header*/
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.project-title{
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    font-size: 16px;
+}
+.stylized-m, .stylized-g{
+    display: flex;
+    gap: 5px;
+    align-items: flex-end;
+}
+.m-line, .g-line{
+    width: 4px;
+    background-color: var(--white); 
+}
+.m-line:nth-child(1){
+    height: 40px;
+}
+.m-line:nth-child(2){
+    height: 30px;
+}
+.m-line:nth-child(3){
+    height: 20px;
+}
+.m-line:nth-child(4){
+    height: 30px;
+}
+.m-line:nth-child(5){
+    height: 40px;
+}
+img.sound-wave-img{
+    width: 180px;
+    margin-inline: 10px;
+    align-self: center;
+}
+.header-line{
+    width: 180px;
+    height: 3px;
+    background-color: var(--white);
+    margin-inline: 10px;
+    align-self: center;
+}
+.stylized-g{
+    align-self: flex-start;
+    position: relative;
+    top: -3px;
+}
+.g-line{
+    position: relative;
+}
+.g-line:nth-child(1){
+    height: 25px;
+    top: -3px;
+}
+.g-line:nth-child(2){
+    height: 37px;
+    top: 3px;
+}
+.g-line:nth-child(3){
+    height: 47px;
+    top: 7px;
+}
+.g-line:nth-child(4){
+    height: 15px;
+    top: 0px;
+}
+.g-line:nth-child(5){
+    height: 8px;
+    top: -7px;
+}
+/* .g-line:nth-child(6){
+    height: 5px;
+    top: -20px;
+} */
+/*piano roll*/
+section.piano-roll-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 540px;
+}
+.note-lanes-container{
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+}
+.note-lane{
+    height: 45px;
+    position: relative;
+}
+.note-lane:nth-child(odd){
+    background-color: #161616;
+}
+.note-lane:nth-child(even){
+    background-color: #090909;
+}
+.note-lane:nth-child(8){
+    background-color: #161616;
+}
+.note-lane:nth-child(9){
+    background-color: #090909;
+}
+.note-lane:nth-child(10){
+    background-color: #161616;
+}
+.note-lane:nth-child(11){
+    background-color: #090909;
+}
+.note-lane:nth-child(12){
+    background-color: #161616;
+}
+/*the notes of the melody*/
+.note-lane>.note{
+    position: absolute;
+    background-color: var(--note-color);
+    border-radius: 11px;
+    width: 50px;
+    height: 100%;
+}
+/*piano*/
+.decorative-line{
+    width: 5px;
+    background-color: black;
+}
+.piano{
+    background-color: #090909;
+    width: 200px;
+    height: 540px; /*height equals height of note lanes*/
+    display: flex;
+}
+.piano-keys-container{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 5px);
+    position: relative;
+}
+.piano-keys-container>div{
+    flex: 1;
+    width: 100%;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.white-key{
+    background-color: white;
+}
+.piano-keys-container>.black-key{
+    background-color: black;
+    height: 52px;
+    width: 80%;
+    position: absolute;
+}
+/*position all of the black keys absolutely*/
+.piano-keys-container>.black-key:nth-child(2){
+    top: 45px;
+}
+.piano-keys-container>.black-key:nth-child(4){
+    top: 131px;
+}
+.piano-keys-container>.black-key:nth-child(6){
+    top: 219px;
+}
+.piano-keys-container>.black-key:nth-child(9){
+    top: 357px;
+}
+.piano-keys-container>.black-key:nth-child(11){
+    top: 448px;
+}
+/* checkboxes for major/minor scale and piano roll/music score settings */
+input[type="checkbox"]{ /*hide the checkboxes for the scale and melody visualization settings*/
+	display: none;
+}
+label[for="switch-scale"]::before {
+    content: "Major scale";
+    position: absolute;
+}
+label[for="switch-visualization"]::before{
+    content: "Piano roll";
+    position: absolute;
+}
+input#switch-scale:checked + label[for="switch-scale"]::before{
+    content: "Minor scale";
+}
+input#switch-visualization:checked + label[for="switch-visualization"]::before{
+    content: "Music score";
+}
+label[for="switch-scale"], label[for="switch-visualization"]{ /*increase the size of the labels, so they are clickable*/
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end; /*align to the right*/
+    align-items: flex-start; /*align to the top*/
+}
+/*export message*/
+.export-message{
+    display: none;
+}
+/*note color selection*/
+.note-color-palette{
+    border-radius: var(--border-radius);
+    width: 130px;
+    padding: 5px;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: absolute;
+    top: -100px;
+    display: none;
+    background-color: var(--black-transparent);
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    cursor: default;
+}
+.relative{
+    position: relative;
+}
+.note-color-palette>div{
+    width: 25px;
+    height: 25px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+.note-color1{
+    background-color: #D15C5C;
+}
+.note-color2{
+    background-color: #ABD975;
+}
+.note-color3{
+    background-color: #77C7B3;
+}
+.note-color4{
+    background-color: #B383F9;
+}
+.note-color5{
+    background-color: #E37A91;
+}
+.note-color6{
+    background-color: #f4dd5d;
+}
+/*logic for toggling the note color palette visibility*/
+input#toggle-note-color-palette:checked~.note-color-palette{
+    display: flex;
+}
+label[for="toggle-note-color-palette"], label[for="toggle-instrument-dropdown"]{ /*make the labels as big as the menu cards*/
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end; /*align to the right*/
+    align-items: flex-start; /*align to the top*/
+    cursor: pointer;
+}
+/*instrument selection dropdown*/
+.instrument-dropdown{
+    display: none;
+    border-radius: var(--border-radius);
+    background-color: var(--black-transparent);
+    padding: 5px;
+    width: 130px;
+    font-size: 14px;
+}
+input#toggle-instrument-dropdown:checked~.instrument-dropdown{
+    display: block;
+    position: absolute;
+    top: -122px;
+}
+/*reset the default radio button styling and add a custom white circle to only the selected option*/
+.instrument-option{
+    position: relative;
+}
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    background-color: transparent;
+}
+input[type="radio"] + label{
+    color: var(--white-transparent);
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+input[type="radio"]:checked + label {
+    margin-left: 15px; /* Add margin to make space for the circle */
+    color: var(--white);
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--white);
+    border-radius: 50%;
+}
+
+/*music score*/
+section.music-score-container{
+    display: none;
+    justify-content: center;
+    background-image: url('images/Texturelabs_Paper_316M.jpg');
+    padding: 20px;
+    border-radius: var(--border-radius);
+    padding-top: 70px;
+    height: 540px;
+}
+.music-score{
+    width: 80vw;
+    height: 200px;
+    background: repeating-linear-gradient(
+      to bottom,
+      black,         /* Line color */
+      black 2px,     /* Line thickness */
+      transparent 2px, /* Gap start */
+      transparent 40px /* Gap end */
+    );
+    position: relative;
+}
+img.g-clef-symbol{
+    position: absolute;
+    top: -7px;
+    width: 123px;
+    left: -10px;
+}
+.music-note{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 50%;
+    transform: skewX(-5deg); /*slant the note*/
+}
+/*key signature - symbols after the g clef that appear only in minor scale option*/
+/*the minor scale is in the key of C, so the flats are B, E and A*/
+.key-signature{
+    display: none;
+    position: relative;
+    left: 100px; /*place the key signature after the g clef symbol*/
+}
+.flat-symbol{ /*create the stem of the symbol*/
+    width: 30px;
+    height: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 100px;
+    border-top-left-radius: 55px;
+    border: 3px solid black;
+    position: relative;
+}
+.flat-symbol::before{ /*create the line of the symbol*/
+    content: "";
+    width: 2px;
+    height: 60px;
+    background-color: #000;
+    position: absolute;
+    top: -47px;
+    left: -2px;
+}
+/*position each of the key signatire symbols */
+.b-flat-symbol{
+    top: 60px;
+}
+.a-flat-symbol{
+    top: 80px;
+}
+/* add a note line for the C note*/
+.music-note.note-line::before{
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 2px;
+    background-color: #000;
+    top: 20px;
+    left: -22px;
+}
+/*menu*/
+.menu-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+.menu{
+    list-style-type: none;
+    padding-inline-start: 0; /*reset the default menu styling*/
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+.menu .menu-card{
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    width: 130px;
+    height: 100px;
+    display: flex; /*center the wrapper inside to create a consistent border*/
+    justify-content: center;
+    align-items: center;
+    background-image: url('images/card-bg.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+    padding: 5px 10px;
+    overflow: hidden;
+}
+.menu .menu-card.card-bg-2{
+    background-image: url('images/card-bg2.svg');
+}
+.menu-card:hover .volume-line:nth-child(1){
+    height: 40px;
+    transition-duration: 0.5s; 
+}
+.menu-card:hover .volume-line:nth-child(2){
+    height: 30px;
+    transition-duration: 0.3s;
+}
+.menu-card:hover .volume-line:nth-child(3){
+    height: 26px;
+    transition-duration: 0.7s;
+}
+.menu-card:hover .volume-line:nth-child(4){
+    height: 20px;
+    transition-duration: 0.5s;
+}
+.menu-card:hover .volume-line:nth-child(5){
+    height: 23px;
+    transition-duration: 0.6s;
+}
+.menu-card:hover .volume-line:nth-child(6){
+    height: 39px;
+    transition-duration: 0.5s;
+}
+.menu-card:hover .volume-line:nth-child(7){
+    height: 29px;
+    transition-duration: 0.5s;
+}
+.volume-lines{
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    display: flex;
+    gap: 5px;
+    transform: rotate(-30deg);
+}
+.volume-lines2{
+    transform: rotate(150deg);
+    bottom: -5px;
+    right: -5px;
+    top: auto;
+    left: auto;
+}
+.volume-line{
+    width: 3px;
+    height: 0;
+    transition: height ease;
+    background-color: var(--gray);
+}
+.volume-lines-wrapper{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+/* li.line-divider{
+    height: 90px;
+    border-right: 1px solid var(--white-transparent);
+} */
+.menu-bar{
+    background-color: var(--black);
+    border-radius: var(--border-radius);
+    margin: 0 auto;
+    padding-inline: 2rem;
+    padding-block: 5px;
+}
+.menu-btn{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    background: none;
+    appearance: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: flex-end; /* Aligns items at the bottom */
+    justify-content: flex-start; /* Aligns items to the left */
+    padding: 0;
+}
+button:disabled{
+    cursor: default;
+    color: #999;
+}
+/*hidden download link*/
+a#download-link{
+    display: none;
+}

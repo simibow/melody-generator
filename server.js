@@ -8,19 +8,19 @@ const cors = require('cors');
 
 app.use(bodyParser.json()); // middleware to parse json bodies
 app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files from the Vite build
-// app.use(express.static(path.join(__dirname, 'dist')));
-app.use(express.static(path.join(__dirname))); // create an absolute path to where server.js is located and serves all static files from there
+app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname))); // create an absolute path to where server.js is located and serves all static files from there
                                                // in order to use images, stylesheets, etc directly
 
 app.get('/', (req, res) => { // sets up a route to handle GET requests to the root URL
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 // Serve the frontend files
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Endpoint to handle saving the MIDI file
 app.post('/save-midi', (req, res) => {
